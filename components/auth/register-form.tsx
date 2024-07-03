@@ -12,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 import { RegisterSchema } from "@/schemas";
 import CardWrapper from "./card-wrapper";
@@ -112,7 +113,11 @@ const RegisterForm = () => {
             <FormSuccess message={success} />
           </div>
           <Button disabled={isPending} type="submit" className="w-full">
-            Create an account
+            {isPending ? (
+              <ReloadIcon className="animate-spin" />
+            ) : (
+              "Create an account"
+            )}
           </Button>
         </form>
       </Form>

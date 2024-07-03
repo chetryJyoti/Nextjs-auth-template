@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import FormError from "../form-error";
 import FormSuccess from "../form-success";
 import { login } from "@/actions/login";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -44,8 +45,8 @@ const LoginForm = () => {
     // with sever actions
     startTransition(() => {
       login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        setSuccess(data?.success);
         // form.reset();
       });
     });
@@ -98,7 +99,11 @@ const LoginForm = () => {
             <FormSuccess message={success} />
           </div>
           <Button disabled={isPending} type="submit" className="w-full">
-            Submit
+            {isPending ? (
+              <ReloadIcon className="animate-spin" />
+            ) : (
+              "Create an account"
+            )}
           </Button>
         </form>
       </Form>

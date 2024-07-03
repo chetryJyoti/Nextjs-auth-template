@@ -19,7 +19,7 @@ export default function Home() {
             font.className
           )}
         >
-          Binbag
+          Auth
         </h1>
         <p className="text-white text-lg">
           Your nextjs authentication template

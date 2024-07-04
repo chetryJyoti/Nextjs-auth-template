@@ -7,7 +7,7 @@ const page = async () => {
   return (
     <div className="flex items-center justify-center h-full">
       Settings page is protected <br />
-      {JSON.stringify(session)}
+      {JSON.stringify(session)} <br/>
       <form
         action={async () => {
           "use server";

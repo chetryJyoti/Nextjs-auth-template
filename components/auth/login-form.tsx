@@ -102,7 +102,7 @@ const LoginForm = () => {
             {isPending ? (
               <ReloadIcon className="animate-spin" />
             ) : (
-              "Create an account"
+              "Login"
             )}
           </Button>
         </form>

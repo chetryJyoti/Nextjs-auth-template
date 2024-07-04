@@ -22,11 +22,20 @@ import FormSuccess from "../form-success";
 import { login } from "@/actions/login";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
+import { useSearchParams } from "next/navigation";
+
 const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
+
+  const searchParams = useSearchParams();
+
+  const linkedError =
+    searchParams.get("error") == "OAuthAccountNotLinked"
+      ? "Email already registered with other providers"
+      : "";
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -46,7 +55,8 @@ const LoginForm = () => {
     startTransition(() => {
       login(values).then((data) => {
         setError(data?.error);
-        setSuccess(data?.success);
+        //TODO: ADD WHEN 2FA IS IMPL
+        // setSuccess(data?.success);
         // form.reset();
       });
     });
@@ -95,15 +105,11 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <FormError message={error} />
+            <FormError message={error || linkedError} />
             <FormSuccess message={success} />
           </div>
           <Button disabled={isPending} type="submit" className="w-full">
-            {isPending ? (
-              <ReloadIcon className="animate-spin" />
-            ) : (
-              "Login"
-            )}
+            {isPending ? <ReloadIcon className="animate-spin" /> : "Login"}
           </Button>
         </form>
       </Form>

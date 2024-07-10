@@ -5,7 +5,7 @@ import { VerifyEmailTemplate } from "@/components/email-template/verify-email";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const verifyLink = `${sitePath}/auth/new-verification?.token=${token}`;
+  const verifyLink = `${sitePath}/auth/new-verification?token=${token}`;
 
   const text = `
   Please verify your email by clicking the link below:

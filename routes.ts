@@ -1,5 +1,5 @@
 // Array of public routes
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 // Array of routes for authentication purpose  - this routes will redirect logged in users to settings
 export const authRoutes = ["/auth/register", "/auth/login", "/auth/error"];

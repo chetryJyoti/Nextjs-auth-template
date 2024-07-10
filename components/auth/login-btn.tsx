@@ -14,7 +14,6 @@ export const LoginBtn = ({
   const router = useRouter();
 
   const onClick = () => {
-    console.log("login clicked");
     router.push('/auth/login')
   };
 

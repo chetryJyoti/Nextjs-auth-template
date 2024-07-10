@@ -56,7 +56,7 @@ const LoginForm = () => {
       login(values).then((data) => {
         setError(data?.error);
         //TODO: ADD WHEN 2FA IS IMPL
-        // setSuccess(data?.success);
+        setSuccess(data?.success);
         // form.reset();
       });
     });

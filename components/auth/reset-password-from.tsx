@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
@@ -13,48 +14,37 @@ import {
   FormMessage,
 } from "../ui/form";
 
-import { LoginSchema } from "@/schemas";
 import CardWrapper from "./card-wrapper";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FormError from "../form-error";
 import FormSuccess from "../form-success";
-import { login } from "@/actions/login";
-import { ReloadIcon } from "@radix-ui/react-icons";
 
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { resetPassoword } from "../../actions/password-reset";
+import { ResetPasswordSchema } from "../../schemas/index";
 
-const LoginForm = () => {
+const ResetPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
 
-  const searchParams = useSearchParams();
-
-  const linkedError =
-    searchParams.get("error") == "OAuthAccountNotLinked"
-      ? "Email already registered with other providers"
-      : "";
-
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
     // with api routes
     // axios.post('/your/api/route',values)
 
     setError("");
     setSuccess("");
 
-    // with sever actions
+    // with server actions
     startTransition(() => {
-      login(values).then((data) => {
+      resetPassoword(values).then((data) => {
         setError(data?.error);
         //TODO: ADD WHEN 2FA IS IMPL
         setSuccess(data?.success);
@@ -64,10 +54,9 @@ const LoginForm = () => {
   };
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backBtnLable="Don't have an account? Register now"
-      backBtnHref="/auth/register"
-      showSocial
+      headerLabel="Forgot your password?"
+      backBtnLable="Back to login"
+      backBtnHref="/auth/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -89,31 +78,15 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="**********"
-                      type="password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button className="px-0 font-normal" variant="link" size="sm" asChild>
-              <Link href={"/auth/reset-password"}>Forgot Password?</Link>
-            </Button>
-            <FormError message={error || linkedError} />
+            <FormError message={error} />
             <FormSuccess message={success} />
           </div>
           <Button disabled={isPending} type="submit" className="w-full">
-            {isPending ? <ReloadIcon className="animate-spin" /> : "Login"}
+            {isPending ? (
+              <ReloadIcon className="animate-spin" />
+            ) : (
+              "Send reset email"
+            )}
           </Button>
         </form>
       </Form>
@@ -121,4 +94,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ResetPasswordForm;

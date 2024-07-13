@@ -13,6 +13,13 @@ import {
   FormMessage,
 } from "../ui/form";
 
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+
 import { LoginSchema } from "@/schemas";
 import CardWrapper from "./card-wrapper";
 import { Input } from "../ui/input";
@@ -76,7 +83,7 @@ const LoginForm = () => {
       headerLabel="Welcome back"
       backBtnLable="Don't have an account? Register now"
       backBtnHref="/auth/register"
-      showSocial
+      showSocial={!showTwoFactor}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -89,11 +96,23 @@ const LoginForm = () => {
                   <FormItem>
                     <FormLabel>Two Factor Code</FormLabel>
                     <FormControl>
-                      <Input
+                      <InputOTP
+                        maxLength={6}
+                        className="!w-full !mx-auto"
                         {...field}
-                        placeholder="12345"
-                        disabled={isPending}
-                      />
+                      >
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                        </InputOTPGroup>
+                        <InputOTPSeparator />
+                        <InputOTPGroup>
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                      </InputOTP>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -113,6 +132,7 @@ const LoginForm = () => {
                           {...field}
                           placeholder="test@gmail.com"
                           type="email"
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -130,6 +150,7 @@ const LoginForm = () => {
                           {...field}
                           placeholder="**********"
                           type="password"
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />

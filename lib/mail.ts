@@ -23,6 +23,23 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   });
 };
 
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  const text = `
+  Here is your Two Factor Verification code:
+  
+  ${token}
+
+  Thank you!`;
+
+  await resend.emails.send({
+    from: "Nextjs Auth Template <onboarding@resend.dev>",
+    to: email,
+    subject: "Nextjs Auth Template: Two Factor Verification code",
+    html: `<p>Here is your Two Factor Verification code: ${token}</p>`,
+    text: text,
+  });
+};
+
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const resetLink = `${sitePath}/auth/new-password?token=${token}`;
 

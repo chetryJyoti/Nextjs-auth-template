@@ -1,8 +1,5 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { signOut } from "next-auth/react";
 import React from "react";
 
 const SettingsPage = () => {

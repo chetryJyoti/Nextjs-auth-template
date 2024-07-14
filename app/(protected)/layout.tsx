@@ -1,10 +1,14 @@
-import Navbar from "@/components/navbar";
+// import Navbar from "@/components/navbar";
+import Navbar from "./_components/navbar";
+interface ProtectedLayerProps {
+  children: React.ReactNode;
+}
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: ProtectedLayerProps) {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
+    <div className="h-full w-full flex flex-col gap-y-10 items-center justify-center  bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-400 to-green-800">
       <Navbar />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">{children}</div>
+      {children}
     </div>
   );
 }

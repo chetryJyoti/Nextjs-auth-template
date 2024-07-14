@@ -53,7 +53,7 @@ const UserInfo = ({ user, label }: UserInfoProps) => {
           </p>
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-          <p className="text-sm font-medium">Two Factor Authenticated</p>
+          <p className="text-sm font-medium">Two Factor Authentication</p>
           <Badge variant={user?.isTwoFactorEnabled ? "success" : "destructive"}>
             {user?.isTwoFactorEnabled ? "ON" : "OFF"}
           </Badge>
